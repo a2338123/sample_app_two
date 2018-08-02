@@ -1,6 +1,16 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+      :address              => 'smtp.qq.com',
+	  :port                 => '587',
+	  :domain               => ':plain',
+	  :user_name            => '1251647820@qq.com',
+	  :password             => 'xyckvabyjxlrhcai',
+	  :authentication       => :login,
+	  :enable_starttls_auto => true
+  }
   # Code is not reloaded between requests.
   config.cache_classes = true
 
