@@ -4,7 +4,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
       :address              => 'smtp.qq.com',
-	  :port                 => '587',
+	  :port                 => '25',
 	  :domain               => ':plain',
 	  :user_name            => '1251647820@qq.com',
 	  :password             => 'xyckvabyjxlrhcai',
