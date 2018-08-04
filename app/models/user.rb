@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -54,8 +55,9 @@ class User < ApplicationRecord
   # 设置密码重设相关的属性
   def create_reset_digest
     self.reset_token = User.new_token
-	update_attribute(:reset_digest,  User.digest(reset_token))
-	update_attribute(:reset_sent_at, Time.zone.now)
+#    update_attribute(:reset_digest,  User.digest(reset_token))
+#	 update_attribute(:reset_sent_at, Time.zone.now)
+	 update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
 
   # 发送密码重设邮件
@@ -67,6 +69,12 @@ class User < ApplicationRecord
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
+
+  # 实现动态流原型
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
 private
    
   # 把电子邮件地址转换成小写
